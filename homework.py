@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from typing import Dict, List, Tuple, ClassVar
 
 
@@ -22,7 +22,7 @@ class InfoMessage:
     def get_message(self) -> str:
         """Возвращает информацию о тренировке."""
 
-        return(self.TRAINING_INFORMATION.format(*self))
+        return(self.TRAINING_INFORMATION.format(**asdict(self)))
 
 
 class Training:
