@@ -22,7 +22,7 @@ class InfoMessage:
     def get_message(self) -> str:
         """Возвращает информацию о тренировке."""
 
-        return(self.TRAINING_INFORMATION.format(self))
+        return(self.TRAINING_INFORMATION.format(*self))
 
 
 class Training:
@@ -103,7 +103,7 @@ class SportsWalking(Training):
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
 
-        spent_calories: float = (self.get_mean_speed(self) ** 2 // self.height
+        spent_calories: float = (self.get_mean_speed() ** 2 // self.height
                                  * self.RATE_CALORIE_WALK2 * self.weight
                                  + self.RATE_CALORIE_WALK1 * self.weight
                                  * self.duration * self.MINUTES_IN_HOUR)
