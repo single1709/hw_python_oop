@@ -2,8 +2,6 @@ from dataclasses import asdict, dataclass
 from typing import Dict, List, Tuple, ClassVar, TypeVar, Type
 
 
-T = TypeVar("T", bound="Training")
-
 @dataclass(frozen=True)
 class InfoMessage:
     """Информационное сообщение о тренировке."""
@@ -70,6 +68,8 @@ class Training:
             speed=self.get_mean_speed(),
             calories=self.get_spent_calories(),
         )
+
+T = TypeVar("T", bound=Training)
 
 
 class Running(Training):
