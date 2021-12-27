@@ -1,9 +1,8 @@
-from __future__ import annotations
 from dataclasses import asdict, dataclass
-from typing import Dict, List, Tuple, ClassVar, TypeVar
+from typing import Dict, List, Tuple, ClassVar, TypeVar, Type
 
 
-T = TypeVar("T", bound=Training)
+T = TypeVar("T", bound="Training")
 
 @dataclass(frozen=True)
 class InfoMessage:
