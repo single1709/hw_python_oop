@@ -69,6 +69,7 @@ class Training:
             calories=self.get_spent_calories(),
         )
 
+
 T = TypeVar("T", bound=Training)
 
 
