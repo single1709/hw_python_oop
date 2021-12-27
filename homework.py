@@ -1,6 +1,9 @@
+from __future__ import annotations
 from dataclasses import asdict, dataclass
-from typing import Dict, List, Tuple, ClassVar
+from typing import Dict, List, Tuple, ClassVar, TypeVar
 
+
+T = TypeVar("T", bound=Training)
 
 @dataclass(frozen=True)
 class InfoMessage:
@@ -11,7 +14,7 @@ class InfoMessage:
     distance: float
     speed: float
     calories: float
-    TRAINING_INFORMATION: ClassVar[str] = (
+    MESSAGE: ClassVar[str] = (
         'Тип тренировки: {training_type}; '
         'Длительность: {duration:.3f} ч.; '
         'Дистанция: {distance:.3f} км; '
@@ -22,7 +25,7 @@ class InfoMessage:
     def get_message(self) -> str:
         """Возвращает информацию о тренировке."""
 
-        return self.TRAINING_INFORMATION.format(**asdict(self))
+        return self.MESSAGE.format(**asdict(self))
 
 
 class Training:
@@ -55,7 +58,7 @@ class Training:
         """Получить количество затраченных калорий."""
 
         raise NotImplementedError(
-            'Определите get_spent_calories в %s.' % (self.__class__.__name__)
+            f'Определите get_spent_calories в {self.__class__.__name__}'
         )
 
     def show_training_info(self) -> InfoMessage:
@@ -161,7 +164,7 @@ class Swimming(Training):
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
 
-    dictionary: Dict[str, type[Training]] = {
+    dictionary: Dict[str, Type[T]] = {
         'SWM': Swimming,
         'RUN': Running,
         'WLK': SportsWalking,
@@ -169,11 +172,12 @@ def read_package(workout_type: str, data: list) -> Training:
 
     try:
         return dictionary[workout_type](*data)
-    except ValueError:
+    except KeyError as error:
         print(
-            f'ValueError: не удалось получить значение по ключу: '
-            f'{workout_type}'
+            f'KeyError: не удалось получить значение по ключу: '
+            f'{error}'
         )
+        raise ValueError
 
 
 def main(training: Training) -> None:
